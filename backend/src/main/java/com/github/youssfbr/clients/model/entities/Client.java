@@ -28,6 +28,11 @@ public class Client {
 
     private LocalDate dateRegister;
 
+    @PrePersist
+    public void prePersist() {
+        setDateRegister(LocalDate.now());
+    }
+
 
     @Override
     public boolean equals(Object o) {
