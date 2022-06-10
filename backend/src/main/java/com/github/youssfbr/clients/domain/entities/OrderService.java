@@ -1,10 +1,10 @@
-package com.github.youssfbr.clients.model.entities;
+package com.github.youssfbr.clients.domain.entities;
 
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -13,38 +13,34 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Client {
+public class OrderService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Long id;
 
-    @Column(nullable = false, length = 60)
-    private String name;
+    @Column(nullable = false)
+    private String description;
 
-    @Column(length = 11)
-    private String cpf;
+    private BigDecimal price;
 
-    private LocalDate dateRegister;
+    @Column(columnDefinition = "TEXT")
+    private String note;
 
-    @PrePersist
-    public void prePersist() {
-        setDateRegister(LocalDate.now());
-    }
+    @ManyToOne
+    private Client client;
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Client client = (Client) o;
-        return id != null && Objects.equals(id, client.id);
+        OrderService orderService = (OrderService) o;
+        return id != null && Objects.equals(id, orderService.id);
     }
 
     @Override
     public int hashCode() {
         return getClass().hashCode();
     }
-
 }
