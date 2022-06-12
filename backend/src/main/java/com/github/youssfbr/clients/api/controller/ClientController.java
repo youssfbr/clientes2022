@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,15 +23,26 @@ public class ClientController {
         return clientService.listAll();
     }
 
+    @GetMapping("/name/{clientName}")
+    public List<ClientResponse> findByNameContaining(@PathVariable String clientName) {
+        return clientService.findByNameContaining(clientName);
+    }
+
     @GetMapping("{clientId}")
     public ClientResponse listById(@PathVariable Long clientId) {
-        return clientService.listById(clientId);
+        return clientService.findById(clientId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageResponseDTO createClient(@RequestBody ClientRequest clientRequest) {
+    public MessageResponseDTO createClient(@RequestBody @Valid ClientRequest clientRequest) {
         return clientService.createClient(clientRequest);
+    }
+
+    @PutMapping("{clientId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public MessageResponseDTO updateClient(@PathVariable Long clientId, @RequestBody @Valid ClientRequest clientRequest) {
+        return clientService.updateClient(clientId, clientRequest);
     }
 
 }

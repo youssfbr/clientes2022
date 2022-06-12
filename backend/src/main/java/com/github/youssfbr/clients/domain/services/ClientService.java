@@ -22,6 +22,7 @@ public class ClientService implements IClientService {
     private final IClientRepository clientRepository;
     private final ClientMapper clientMapper;
 
+
     @Override
     @Transactional(readOnly = true)
     public List<ClientResponse> listAll() {
@@ -33,7 +34,16 @@ public class ClientService implements IClientService {
 
     @Override
     @Transactional(readOnly = true)
-    public ClientResponse listById(Long id) {
+    public List<ClientResponse> findByNameContaining(String name) {
+        return clientRepository.findByNameContaining(name)
+                .stream()
+                .map(clientMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ClientResponse findById(Long id) {
         return clientRepository.findById(id)
                 .map(clientMapper::toDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -49,10 +59,24 @@ public class ClientService implements IClientService {
         return createMessageResponse("Cliente criado com ID ", createdClient.getId());
     }
 
+    @Override
+    @Transactional
+    public MessageResponseDTO updateClient(final Long clientId, final ClientRequest clientRequest) {
+
+        findById(clientId);
+
+        Client clientToUpdate = clientMapper.toModel(clientRequest);
+        clientToUpdate.setId(clientId);
+        Client updatedClient = clientRepository.save(clientToUpdate);
+
+        return createMessageResponse("Cliente atualizado com ID ", updatedClient.getId());
+    }
+
     private MessageResponseDTO createMessageResponse(final String message, final Long id) {
         return MessageResponseDTO
                 .builder()
                 .message(message + id)
                 .build();
     }
+
 }
