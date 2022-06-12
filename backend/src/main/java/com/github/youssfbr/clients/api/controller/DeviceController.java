@@ -21,9 +21,9 @@ public class DeviceController {
         return deviceService.listAll();
     }
 
-    @GetMapping("{clientId}")
-    public DeviceResponse findById(@PathVariable Long clientId) {
-        return deviceService.listById(clientId);
+    @GetMapping("{deviceId}")
+    public DeviceResponse findById(@PathVariable Long deviceId) {
+        return deviceService.listById(deviceId);
     }
 
     @PostMapping
