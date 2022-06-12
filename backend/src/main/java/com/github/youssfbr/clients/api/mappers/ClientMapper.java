@@ -22,7 +22,6 @@ public class ClientMapper {
 
     public Client toModel(ClientRequest clientRequest) {
         return Client.builder()
-              //  .id(clientRequest.getId())
                 .name(clientRequest.getName())
                 .email(clientRequest.getEmail())
                 .cpf(clientRequest.getCpf())

@@ -9,7 +9,9 @@ import java.util.List;
 public interface IClientService {
 
     List<ClientResponse> listAll();
-    ClientResponse listById(Long id);
+    List<ClientResponse> findByNameContaining(String name);
+    ClientResponse findById(Long id);
     MessageResponseDTO createClient(ClientRequest clientRequest);
+    MessageResponseDTO updateClient(Long clientId, ClientRequest clientRequest);
 
 }
