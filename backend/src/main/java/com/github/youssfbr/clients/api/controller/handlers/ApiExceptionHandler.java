@@ -28,8 +28,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             WebRequest request
     ) {
         ErrorResponse body = ErrorResponse.builder()
-                .status(status.value())
-                .error(status.getReasonPhrase())
+                .statusCode(status.value())
+                .status(status.getReasonPhrase())
                 .cause(exception.getClass().getSimpleName())
                 .timestamp(LocalDateTime.now())
                 .message("Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.")

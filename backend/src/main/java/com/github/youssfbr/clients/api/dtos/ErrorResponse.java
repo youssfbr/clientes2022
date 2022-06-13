@@ -11,9 +11,9 @@ import java.util.Map;
 @Builder
 public class ErrorResponse {
 
-    private Integer status;
+    private Integer statusCode;
+    private String status;
     private LocalDateTime timestamp;
-    private String error;
     private String cause;
     private String message;
     private Map<String, List<String>> errors;
