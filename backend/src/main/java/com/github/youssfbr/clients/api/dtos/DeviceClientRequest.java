@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Data
@@ -27,8 +28,12 @@ public class DeviceClientRequest {
     @DeviceBrandExistsById
     private Long deviceBrandId;
 
+    @Size(max = 20)
     private String model;
+
+    @Size(max = 20)
     private String serial;
+
     private String note;
     private LocalDate dateRegister;
 

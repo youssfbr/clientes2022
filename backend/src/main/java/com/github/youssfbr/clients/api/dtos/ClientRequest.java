@@ -3,14 +3,14 @@ package com.github.youssfbr.clients.api.dtos;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Data
 public class ClientRequest {
 
-    @NotEmpty
+    @NotBlank
     @Size(max = 60)
     private String name;
 

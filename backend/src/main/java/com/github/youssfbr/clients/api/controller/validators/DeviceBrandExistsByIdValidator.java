@@ -1,6 +1,5 @@
 package com.github.youssfbr.clients.api.controller.validators;
 
-import com.github.youssfbr.clients.domain.repositories.IClientRepository;
 import com.github.youssfbr.clients.domain.repositories.IDeviceBrandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
