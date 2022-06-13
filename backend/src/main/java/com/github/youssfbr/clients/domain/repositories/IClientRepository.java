@@ -15,4 +15,6 @@ public interface IClientRepository extends JpaRepository<Client, Long> {
                 .orElseThrow(ClientNotFoundException::new);
     }
 
+    boolean existsByEmail(String email);
+
 }

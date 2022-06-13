@@ -6,6 +6,7 @@ import com.github.youssfbr.clients.api.dtos.MessageResponseDTO;
 import com.github.youssfbr.clients.api.mappers.ClientMapper;
 import com.github.youssfbr.clients.domain.entities.Client;
 import com.github.youssfbr.clients.domain.repositories.IClientRepository;
+import com.github.youssfbr.clients.domain.services.exceptions.EmailExistsException;
 import com.github.youssfbr.clients.domain.services.interfaces.IClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -53,6 +54,8 @@ public class ClientService implements IClientService {
     @Transactional
     public MessageResponseDTO createClient(ClientRequest clientRequest) {
 
+        checkEmail(clientRequest);
+
         Client clientToCreate = clientMapper.toModel(clientRequest);
         Client createdClient = clientRepository.save(clientToCreate);
 
@@ -77,6 +80,16 @@ public class ClientService implements IClientService {
                 .builder()
                 .message(message + id)
                 .build();
+    }
+
+    private void checkEmail(ClientRequest clientRequest) {
+
+        boolean emailNull = clientRequest.getEmail() == null || clientRequest.getEmail().isEmpty();
+        boolean cpfExists = clientRepository.existsByEmail(clientRequest.getEmail());
+
+        if (!emailNull && cpfExists) {
+            throw new EmailExistsException();
+        }
     }
 
 }
