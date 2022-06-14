@@ -22,6 +22,7 @@ public class OrderServiceService implements IOrderServiceService {
 
     private final IOrderServiceRepository orderServiceRepository;
     private final OrderServiceMapper orderServiceMapper;
+    private static final String MESSAGE = "Ordem de Serviço criada com ID ";
 
     @Override
     @Transactional(readOnly = true)
@@ -47,13 +48,13 @@ public class OrderServiceService implements IOrderServiceService {
         OrderService orderServiceToCreate = orderServiceMapper.toModel(orderServiceRequest);
         OrderService createdOrderService = orderServiceRepository.save(orderServiceToCreate);
 
-        return createMessageResponse("Serviço criado com ID ", createdOrderService.getId());
+        return createMessageResponse(createdOrderService.getId());
     }
 
-    private MessageResponseDTO createMessageResponse(final String message, final Long id) {
+    private MessageResponseDTO createMessageResponse(final Long id) {
         return MessageResponseDTO
                 .builder()
-                .message(message + id)
+                .message(MESSAGE + id)
                 .build();
     }
 

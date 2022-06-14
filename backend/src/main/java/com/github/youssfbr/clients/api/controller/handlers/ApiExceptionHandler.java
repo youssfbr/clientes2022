@@ -1,6 +1,7 @@
 package com.github.youssfbr.clients.api.controller.handlers;
 
 import com.github.youssfbr.clients.api.dtos.ErrorResponse;
+import com.github.youssfbr.clients.domain.services.exceptions.ClientNotFoundException;
 import com.github.youssfbr.clients.domain.services.exceptions.EmailExistsException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 .statusCode(status.value())
                 .status(status.getReasonPhrase())
                 .cause(exception.getClass().getSimpleName())
-                .timestamp(LocalDateTime.now())
+                .timestamp(OffsetDateTime.now())
                 .message("Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.")
                 .errors(convertFieldErrors(exception.getBindingResult().getFieldErrors()))
                 .build();
@@ -41,8 +42,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, status);
     }
 
+    @ExceptionHandler(ClientNotFoundException.class)
+    public ResponseEntity<Object> clientNotFoundException(ClientNotFoundException exception) {
+
+        ErrorResponse message = getError(HttpStatus.BAD_REQUEST, exception);
+
+        return ResponseEntity.status(message.getStatusCode()).body(message);
+    }
+
     @ExceptionHandler(EmailExistsException.class)
-    public ResponseEntity<Object> emailExists(EmailExistsException exception) {
+    public ResponseEntity<Object> emailExistsException(EmailExistsException exception) {
 
         ErrorResponse message = getError(HttpStatus.BAD_REQUEST, exception);
 
@@ -70,7 +79,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 .statusCode(status.value())
                 .status(status.getReasonPhrase())
                 .cause(exception.getClass().getSimpleName())
-                .timestamp(LocalDateTime.now())
+                .timestamp(OffsetDateTime.now())
                 .message(exception.getMessage())
                 .build();
     }

@@ -3,7 +3,7 @@ package com.github.youssfbr.clients.api.mappers;
 import com.github.youssfbr.clients.api.dtos.OrderServiceRequest;
 import com.github.youssfbr.clients.api.dtos.OrderServiceResponse;
 import com.github.youssfbr.clients.domain.entities.OrderService;
-import com.github.youssfbr.clients.domain.repositories.IClientRepository;
+import com.github.youssfbr.clients.domain.repositories.IDeviceClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,26 +11,32 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OrderServiceMapper {
 
-    private final IClientRepository clientRepository;
-    private final ClientMapper clientMapper;
-
+    private final IDeviceClientRepository deviceClientRepository;
+    private final DeviceClientMapper deviceClientMapper;
 
     public OrderServiceResponse toDTO(OrderService orderService) {
         return OrderServiceResponse.builder()
                 .id(orderService.getId())
+                .openDate(orderService.getOpenDate())
+                .statusOrderService(orderService.getStatusOrderService())
+                .device(deviceClientMapper.toDTO(orderService.getDeviceClient()))
+                .claimedDefect(orderService.getClaimedDefect())
+                .solutionDefect(orderService.getSolutionDefect())
                 .description(orderService.getDescription())
                 .price(orderService.getPrice())
                 .note(orderService.getNote())
-                .client(clientMapper.toDTO(orderService.getClient()))
+                .completionDate(orderService.getCompletionDate())
                 .build();
     }
 
     public OrderService toModel(OrderServiceRequest orderServiceRequest) {
         return OrderService.builder()
+                .deviceClient(deviceClientRepository.findByIdOrElseThrow(orderServiceRequest.getDeviceId()))
+                .claimedDefect(orderServiceRequest.getClaimedDefect())
+                .solutionDefect(orderServiceRequest.getSolutionDefect())
                 .description(orderServiceRequest.getDescription())
                 .price(orderServiceRequest.getPrice())
                 .note(orderServiceRequest.getNote())
-                .client(clientRepository.findByIdOrElseThrow(orderServiceRequest.getClientId()))
                 .build();
     }
 

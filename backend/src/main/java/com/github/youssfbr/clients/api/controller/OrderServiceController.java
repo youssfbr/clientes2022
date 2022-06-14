@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,7 @@ public class OrderServiceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageResponseDTO createOrderService(@RequestBody OrderServiceRequest orderServiceRequest) {
+    public MessageResponseDTO createOrderService(@RequestBody @Valid OrderServiceRequest orderServiceRequest) {
         return orderService.createOrderService(orderServiceRequest);
     }
 

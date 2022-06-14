@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 @Entity
@@ -34,11 +35,11 @@ public class Client {
     private String note;
 
     @Column(nullable = false, updatable = false)
-    private LocalDate dateRegister;
+    private OffsetDateTime dateRegister;
 
     @PrePersist
     public void prePersist() {
-        setDateRegister(LocalDate.now());
+        setDateRegister(OffsetDateTime.now());
     }
 
 

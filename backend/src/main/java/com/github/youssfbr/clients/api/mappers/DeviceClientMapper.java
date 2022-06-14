@@ -25,7 +25,7 @@ public class DeviceClientMapper {
         return DeviceClientResponse.builder()
                 .id(deviceClient.getId())
                 .client(clientMapper.toDTO(deviceClient.getClient()))
-                .device(deviceMapper.toDTO(deviceClient.getDevice()))
+                .deviceType(deviceMapper.toDTO(deviceClient.getDevice()))
                 .deviceBrand(deviceBrandMapper.toDTO(deviceClient.getDeviceBrand()))
                 .model(deviceClient.getModel())
                 .serial(deviceClient.getSerial())
