@@ -18,8 +18,9 @@ public class OrderServiceResponse {
     private StatusOrderService statusOrderService;
     private DeviceClientResponse device;
     private String claimedDefect;
-    private String solutionDefect;
     private String description;
+    private String foundDefect;
+    private String solutionDefect;
     private BigDecimal price;
     private String note;
     private OffsetDateTime completionDate;

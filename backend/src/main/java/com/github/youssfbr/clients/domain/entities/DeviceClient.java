@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 @Entity
@@ -34,15 +35,21 @@ public class DeviceClient {
     @Column(length = 20)
     private String serial;
 
+    @Column(length = 40)
+    private String configuration;
+
+    @Column(length = 20)
+    private String voltage;
+
     @Column(columnDefinition = "TEXT")
     private String note;
 
     @Column(nullable = false, updatable = false)
-    private LocalDate dateRegister;
+    private OffsetDateTime dateRegister;
 
     @PrePersist
     public void prePersist() {
-        setDateRegister(LocalDate.now());
+        setDateRegister(OffsetDateTime.now());
     }
 
 

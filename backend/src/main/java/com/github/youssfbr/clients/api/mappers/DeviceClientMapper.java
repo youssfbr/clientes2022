@@ -29,6 +29,8 @@ public class DeviceClientMapper {
                 .deviceBrand(deviceBrandMapper.toDTO(deviceClient.getDeviceBrand()))
                 .model(deviceClient.getModel())
                 .serial(deviceClient.getSerial())
+                .configuration(deviceClient.getConfiguration())
+                .voltage(deviceClient.getVoltage())
                 .note(deviceClient.getNote())
                 .dateRegister(deviceClient.getDateRegister())
                 .build();
@@ -41,6 +43,8 @@ public class DeviceClientMapper {
                 .deviceBrand(deviceBrandRepository.findByIdOrElseThrow(deviceClientRequest.getDeviceBrandId()))
                 .model(deviceClientRequest.getModel())
                 .serial(deviceClientRequest.getSerial())
+                .configuration(deviceClientRequest.getConfiguration())
+                .voltage(deviceClientRequest.getVoltage())
                 .note(deviceClientRequest.getNote())
                 .build();
     }

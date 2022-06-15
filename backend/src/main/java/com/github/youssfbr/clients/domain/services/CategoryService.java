@@ -3,14 +3,13 @@ package com.github.youssfbr.clients.domain.services;
 import com.github.youssfbr.clients.api.dtos.MessageResponseDTO;
 import com.github.youssfbr.clients.domain.entities.Category;
 import com.github.youssfbr.clients.domain.repositories.ICategoryRepository;
+import com.github.youssfbr.clients.domain.services.exceptions.CategoryNotFoundException;
 import com.github.youssfbr.clients.domain.services.interfaces.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -29,7 +28,7 @@ public class CategoryService implements ICategoryService {
     @Transactional(readOnly = true)
     public Category findById(Long id) {
         return categoryRepository.findById(id)
-                .orElseThrow(null);
+                .orElseThrow(CategoryNotFoundException::new);
     }
 
     @Override
@@ -44,19 +43,11 @@ public class CategoryService implements ICategoryService {
     @Transactional
     public MessageResponseDTO updateCategory(Long categoryId, Category categoryDto) {
 
-        Category categoryEntity = validateCategoryExists(categoryId);
+        Category categoryEntity = findById(categoryId);
         BeanUtils.copyProperties(categoryDto, categoryEntity, "id");
 
         Category savedCategory = categoryRepository.save(categoryEntity);
         return createMessageResponse("Categoria atualizada com ID ", savedCategory.getId());
-    }
-
-    private Category validateCategoryExists(Long categoryId) {
-        Optional<Category> category = categoryRepository.findById(categoryId);
-        if (category.isEmpty()) {
-            throw new EmptyResultDataAccessException(1);
-        }
-        return category.get();
     }
 
     private MessageResponseDTO createMessageResponse(final String message, final Long id) {

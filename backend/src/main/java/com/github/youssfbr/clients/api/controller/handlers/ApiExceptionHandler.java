@@ -1,6 +1,7 @@
 package com.github.youssfbr.clients.api.controller.handlers;
 
 import com.github.youssfbr.clients.api.dtos.ErrorResponse;
+import com.github.youssfbr.clients.domain.services.exceptions.CategoryNotFoundException;
 import com.github.youssfbr.clients.domain.services.exceptions.ClientNotFoundException;
 import com.github.youssfbr.clients.domain.services.exceptions.EmailExistsException;
 import org.springframework.http.HttpHeaders;
@@ -43,7 +44,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ClientNotFoundException.class)
-    public ResponseEntity<Object> clientNotFoundException(ClientNotFoundException exception) {
+    public ResponseEntity<Object> handleClientNotFoundException(ClientNotFoundException exception) {
 
         ErrorResponse message = getError(HttpStatus.BAD_REQUEST, exception);
 
@@ -51,7 +52,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(EmailExistsException.class)
-    public ResponseEntity<Object> emailExistsException(EmailExistsException exception) {
+    public ResponseEntity<Object> handleEmailExistsException(EmailExistsException exception) {
+
+        ErrorResponse message = getError(HttpStatus.BAD_REQUEST, exception);
+
+        return ResponseEntity.status(message.getStatusCode()).body(message);
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<Object> handleCategoryNotFoundException(CategoryNotFoundException exception) {
 
         ErrorResponse message = getError(HttpStatus.BAD_REQUEST, exception);
 

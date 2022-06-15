@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 @Data
 @Builder
@@ -17,7 +17,9 @@ public class DeviceClientResponse {
     private DeviceBrandResponse deviceBrand;
     private String model;
     private String serial;
+    private String configuration;
+    private String voltage;
     private String note;
-    private LocalDate dateRegister;
+    private OffsetDateTime dateRegister;
 
 }

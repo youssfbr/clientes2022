@@ -20,9 +20,11 @@ public class OrderServiceMapper {
                 .openDate(orderService.getOpenDate())
                 .statusOrderService(orderService.getStatusOrderService())
                 .device(deviceClientMapper.toDTO(orderService.getDeviceClient()))
+
                 .claimedDefect(orderService.getClaimedDefect())
-                .solutionDefect(orderService.getSolutionDefect())
                 .description(orderService.getDescription())
+                .foundDefect(orderService.getFoundDefect())
+                .solutionDefect(orderService.getSolutionDefect())
                 .price(orderService.getPrice())
                 .note(orderService.getNote())
                 .completionDate(orderService.getCompletionDate())
@@ -33,8 +35,9 @@ public class OrderServiceMapper {
         return OrderService.builder()
                 .deviceClient(deviceClientRepository.findByIdOrElseThrow(orderServiceRequest.getDeviceId()))
                 .claimedDefect(orderServiceRequest.getClaimedDefect())
-                .solutionDefect(orderServiceRequest.getSolutionDefect())
                 .description(orderServiceRequest.getDescription())
+                .solutionDefect(orderServiceRequest.getSolutionDefect())
+                .solutionDefect(orderServiceRequest.getSolutionDefect())
                 .price(orderServiceRequest.getPrice())
                 .note(orderServiceRequest.getNote())
                 .build();

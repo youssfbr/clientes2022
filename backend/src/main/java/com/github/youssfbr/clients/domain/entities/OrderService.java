@@ -34,11 +34,9 @@ public class OrderService {
     private DeviceClient deviceClient;
 
     private String claimedDefect;
-
-    private String solutionDefect;
-
     private String description;
-
+    private String foundDefect;
+    private String solutionDefect;
     private BigDecimal price;
 
     @Column(columnDefinition = "TEXT")

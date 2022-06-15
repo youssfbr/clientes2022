@@ -34,6 +34,12 @@ public class DeviceClientRequest {
     @Size(max = 20)
     private String serial;
 
+    @Size(max = 40)
+    private String configuration;
+
+    @Size(max = 20)
+    private String voltage;
+
     private String note;
     private LocalDate dateRegister;
 
